@@ -1,0 +1,46 @@
+.page-header {
+    position: fixed;
+    width: 100%;
+    background-color: #133656;
+    height: 80px;
+    line-height: 80px;
+    color: rgb(255, 255, 255);
+    vertical-align: bottom;
+    font-weight: 200;
+    font-size: 22px;
+    z-index: 1;
+    text-align: center;
+
+    .header-title {
+        float: left;
+        font-weight: 500;
+        margin-left: 15px;
+    }
+
+    .link-container {
+        display: inline-block;
+        float: right;
+        display: inline-block;
+        position: fixed;
+        top: 0;
+        right: 0;
+    }
+
+    span {
+        margin-right: 15px;
+        font-size: 16px;;
+    }
+
+}
+
+
+
+@media only screen and (max-width: 429px) {
+    .header-title {
+        overflow: hidden;
+        white-space: nowrap;
+        display: inline-block;
+        max-width: 80%;
+        text-overflow: ellipsis;
+    }
+}

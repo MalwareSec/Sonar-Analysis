@@ -1,0 +1,4 @@
+.env
+init-mongo.js
+data/db/*
+*__pycache__

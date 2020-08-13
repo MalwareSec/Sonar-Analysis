@@ -1,0 +1,50 @@
+version: '3.7'
+
+networks:
+  sonar-parse-network:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    hostname: mongodb
+    command: ["--bind_ip_all"]
+    env_file:
+        - .env
+    environment:
+        MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+        MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+        MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+    ports:
+      - 27017:27017
+    networks:
+      - sonar-parse-network
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+  sonar_parse_ui:
+    build: ./sonar_parse_ui
+    ports:
+      - '3000:3000'
+    networks:
+      - sonar-parse-network
+    stdin_open: true
+    depends_on:
+      - sonar_parse_api
+  sonar_parse_api:
+    build: ./sonar_parse_api
+    networks:
+      - sonar-parse-network
+    ports:
+      - '8080:8080'
+    stdin_open: true
+    depends_on: 
+      - mongodb
+      - sonar_parse_etl
+  sonar_parse_etl:
+    build: ./sonar_parse_etl
+    networks:
+      - sonar-parse-network
+    stdin_open: true
+    depends_on: 
+      - mongodb
