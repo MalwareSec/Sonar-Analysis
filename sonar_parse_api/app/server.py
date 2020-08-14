@@ -1,6 +1,7 @@
 from app.base_handler import BaseHandler
 from pymongo import MongoClient
 import json
+import re
 import ast 
 
 class HealthCheck(BaseHandler):
@@ -24,8 +25,9 @@ class GetRecords(BaseHandler):
 			records_list = []
 			data = json.loads(self.request.body)
 			search = data["search"]
+			regx = re.compile("%s$" % search, re.IGNORECASE)
 			db = self.mongo_client(self.objApi["config"])
-			records_query = db["Sonar_Records"].find({'subject.CN':{'$regex': search}})
+			records_query = db["Sonar_Records"].find({'subject.CN':{'$regex': regx}})
 			for record in records_query:
 				record_dict = {}
 				record_dict["ip_address"] = record["ip"]

@@ -2,6 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+import './Search.scss';
+
 const initialFormData = Object.freeze({
     search: ""
 });
@@ -31,8 +33,6 @@ function Search(props) {
             console.log(response);
         } else {
             const response_json = await response.json();
-            // console.log(response_json["Records"].length);
-            // console.log(response_json);
             if (response_json["Records"].length > 0) {
                 props.objui.update_records(response_json.Records);
             } else {
@@ -46,12 +46,14 @@ function Search(props) {
                     <Form.Label>Search Endpoint</Form.Label>
                     <Form.Control name="search" onChange={handleChange} type="text" placeholder="Enter Search Endpoint" />
                 </Form.Group>
-                <Button variant="primary" onClick={(e) => {getNewRecords(e)}}>
-                    Submit
-                </Button>
-                <Button variant="danger" onClick={(e) => {props.objui.clear_records(e)}}>
-                    Clear
-                </Button>
+                <div className="button-container">
+                    <Button variant="primary" onClick={(e) => {getNewRecords(e)}}>
+                        Submit
+                    </Button>
+                    <Button variant="danger" onClick={(e) => {props.objui.clear_records(e);}}>
+                        Clear
+                    </Button>
+                </div>
             </Form>
     );
 }

@@ -21,7 +21,7 @@ services:
     networks:
       - sonar-parse-network
     volumes:
-      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./sonar_parse_etl/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
   sonar_parse_ui:
     build: ./sonar_parse_ui
     ports:
@@ -29,6 +29,8 @@ services:
     networks:
       - sonar-parse-network
     stdin_open: true
+    links: 
+      - sonar_parse_api
     depends_on:
       - sonar_parse_api
   sonar_parse_api:

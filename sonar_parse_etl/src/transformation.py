@@ -12,6 +12,7 @@ class Transformation:
             dataSet["db"],
             dataSet["port"]
         )
+        self.transformed = False
         
     def transform(self, dataset_records):
         dataset_records_list = []
@@ -19,6 +20,8 @@ class Transformation:
             json_data = json.loads(data)
             dataset_records_list.append(json_data)
         df = pd.DataFrame(dataset_records_list, columns=json_data.keys())
-        self.client.insert_into_db(df, 'Sonar_Records')
+        if not df.empty:
+            self.transformed = True
+            self.client.insert_into_db(df, 'Sonar_Records')
 
 
