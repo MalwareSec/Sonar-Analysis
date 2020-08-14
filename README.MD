@@ -18,6 +18,12 @@ Clone or download the package:
 git clone https://github.com/MalwareSec/Sonar-Analysis.git
 ```
 
+or for older versions of git
+
+``` bash
+git lfs clone https://github.com/MalwareSec/Sonar-Analysis.git
+```
+
 Build and create necessary containers:
 
 ``` bash
